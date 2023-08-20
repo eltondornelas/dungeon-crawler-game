@@ -80,7 +80,7 @@ impl MapBuilder {
         }
     }
 
-    fn build_corridors(&mut self, rng: &mut RandomNumberGenerator) { // TODO: entender com calma esse algoritmo
+    fn build_corridors(&mut self, rng: &mut RandomNumberGenerator) {        
         let mut rooms = self.rooms.clone();
         rooms.sort_by(|a, b| a.center().x.cmp(&b.center().x));
 
