@@ -7,6 +7,8 @@ mod prelude {
 
     pub const SCREEN_WIDTH: i32 = 80;
     pub const SCREEN_HEIGHT: i32 = 50;
+    pub const DISPLAY_WIDTH: i32 = SCREEN_WIDTH / 2;
+    pub const DISPLAY_HEIGHT: i32 = SCREEN_HEIGHT / 2;
 
     pub use crate::map::*;
     pub use crate::map_builder::*;
@@ -15,6 +17,11 @@ mod prelude {
 
 use prelude::*;
 
+/*
+ * Storing State The game loop runs by calling your application’s tick() function with every frame.
+ * The tick() function doesn’t know anything about your game, so you need a way to store the game’s current status, known as the game state.
+ * Everything you need to preserve between frames is in your game’s state. The state represents a snapshot of the current game.
+ */
 struct State {
     map: Map,
     player: Player,
@@ -42,10 +49,18 @@ impl GameState for State {
 }
 
 fn main() -> BError {
-    let context = BTermBuilder::simple80x50()
+    let context = BTermBuilder::new()
         .with_title("Dungeon Crawler")
         .with_fps_cap(30.0)
+        .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
+        .with_tile_dimensions(32, 32)
+        .with_resource_path("../resources")
+        .with_font("dungeonfont.png", 32, 32)
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
         .build()?;
 
     main_loop(context, State::new())
 }
+
+// https://github.com/BurningBlueFox/rust-dungeon-crawler

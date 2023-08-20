@@ -16,7 +16,7 @@ impl MapBuilder {
             player_start: Point::zero(),
         };
 
-        mb.fill(TileType::Wall);
+        mb.fill(TileType::Wall); // nao entendi porque ele da o new como tudo Floor e depois troca tudo aqui por Wall
         mb.build_random_rooms(rng);
         mb.build_corridors(rng);
         mb.player_start = mb.rooms[0].center();
@@ -80,7 +80,7 @@ impl MapBuilder {
         }
     }
 
-    fn build_corridors(&mut self, rng: &mut RandomNumberGenerator) {
+    fn build_corridors(&mut self, rng: &mut RandomNumberGenerator) { // TODO: entender com calma esse algoritmo
         let mut rooms = self.rooms.clone();
         rooms.sort_by(|a, b| a.center().x.cmp(&b.center().x));
 
